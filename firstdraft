@@ -1,0 +1,154 @@
+import java.util.Scanner;
+import java.util.Random;
+
+public class RPSGame {
+
+	public static int playerScore = 0;
+	public static int computerScore = 0;
+	public static String playerChoice;
+	public static String computerChoice;
+	public static boolean gameResult = false;
+	private static boolean continueGame = true;
+	private static int count = 0;
+	public static boolean checkTie = false;
+	
+	
+	
+	public RPSGame() {
+		
+	}
+
+	public String getComputerChoice(){
+		Random randomChoice = new Random();
+		int choiceIndex = randomChoice.nextInt(3);
+		if(choiceIndex < 1 ){
+			return "R";
+		}
+		else if(choiceIndex < 2){
+			return "P";
+		}
+		else{
+			return "S";
+		}
+	}
+	
+	public boolean isValidInput(){
+		boolean checkInput = false;
+		if(!(playerChoice.equalsIgnoreCase("r") || playerChoice.equalsIgnoreCase("p") || playerChoice.equalsIgnoreCase("s"))){
+			return checkInput;
+		}
+		else{
+			checkInput = true;
+			return checkInput;
+		}
+	}
+	
+	public void getReport(){
+		System.out.println("*\tYou played " + count + " terms \t*");
+		System.out.println("*\tYour score:       " + playerScore + "\t*");
+		System.out.println("*\tComputer score:   " + computerScore + "\t*");
+		System.out.println("*********************************");
+	}
+	
+	public boolean determineWin(String choiceA, String choiceB){
+		choiceA = choiceA.toUpperCase();
+		switch(choiceA){
+			case "R":
+				if(choiceB.equalsIgnoreCase("S")){
+					gameResult = true;
+					return gameResult;
+				}
+				else{
+					gameResult = false;
+					return gameResult;
+				}
+				
+			case "P":
+				if(choiceB.equalsIgnoreCase("R")){
+					gameResult = true;
+
+					return gameResult;
+				}
+				else{
+					gameResult = false;
+
+					return gameResult;
+				}
+				
+			case "S":
+				if(choiceB.equalsIgnoreCase("P")){
+					gameResult = true;
+					
+
+					return gameResult;
+				}
+				else{
+					gameResult = false;
+
+					return gameResult;
+				}
+			
+			default:
+				return gameResult;
+				
+		}
+	}
+	
+	public boolean determineTie(String choiceA, String choiceB){
+		if(choiceA.equalsIgnoreCase(choiceB)){
+			checkTie = true;
+			
+			return checkTie;
+		}else{
+			checkTie=false;
+			return checkTie;
+		}
+	}
+
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+
+		System.out.println("Welcome to Rock, Paper, Scissors!");
+		System.out.println("You will play against the computer.\nEnjoy it!!! :-)");
+		
+		while(continueGame){
+			RPSGame playGame = new RPSGame();
+			System.out.print("*\tEnter 'R' for rock.\n*\tEnter 'P' for paper.\n*\tEnter 'S' for scissors.\n*\tEnter 'X' for exit.\nPlease enter your choice:");
+			playerChoice = scan.next();
+			computerChoice = playGame.getComputerChoice();
+			
+			
+			if(playerChoice.equalsIgnoreCase("x")){
+				System.out.println("*********************************\n*\tThe game is end!\t*\n*********************************");
+				playGame.getReport();
+				continueGame = false;
+			}
+			else if(playGame.isValidInput()){
+				System.out.println("you entered: " + playerChoice);
+				System.out.println("the computer choice is: " + computerChoice);
+				if(playGame.determineTie(playerChoice, computerChoice)){
+					System.out.println("It is tie.");
+				}
+				else{
+					if(playGame.determineWin(playerChoice, computerChoice)){
+						System.out.println("*\tYou win!\t*");
+						playerScore++;
+					}
+					else{
+						System.out.println("Computer Wins");
+						computerScore++;
+					}
+				}
+				count++; 
+				playGame.getReport();
+			}
+			else{
+				System.out.println("You entered wrong !!!\nPlease try again!!!\nThanks!!!");
+			}
+		}
+		
+		
+
+	}
+
+}
